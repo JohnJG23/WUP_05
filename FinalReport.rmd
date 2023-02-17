@@ -17,6 +17,11 @@ triUmp <-read.csv(file="triUmpsal.csv",header=TRUE)
 
 A new  preventative aides drug (triUmpsal) is under test in clinical trials. Consider only the DrugUsers, does this drug seem effective?  Hint - use dplyr to obtain that subpopulation with the filter command.
 
+```{r}
+druggies <- filter(triUmp, DrugUser=="yes")
+```
+
+
 # Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!-->
@@ -31,9 +36,32 @@ A new  preventative aides drug (triUmpsal) is under test in clinical trials. Con
 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
 
+```{r}
+barchartGC(~treatment + infected,data=druggies)
+barchartGC(~treatment + infected,data=druggies, type="percent")
+
+```
+
+```{r}
+barchartGC(~infected + treatment,data=druggies)
+barchartGC(~infected + treatment,data=druggies, type="percent")
+
+```
+
+Interestingly the difference in this study is that the there is a box defined as "aids" and a second box labeled "none". The study communicates that there was about a substantial amount of people in the first box who did not get aids because of a drug and there was a substantial amount of people who did get aids in the second group "none" because of a placebo effect.  
+
 ### Numerical Descriptive Results
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=druggies)
+rowPerc(table1)
+colPerc(table1)
+```
+
+Interestingly the study communicates columns and rows representing the study of this clinical trial that took care of patients who were diagnosed with aids. In the row percents it is an explanation on the diagnostics of patients with aids and in the column it is informing the reader about the involvement of a drug or placebo.
+
 
 ## Inferential Results
 
